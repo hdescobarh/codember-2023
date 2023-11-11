@@ -8,6 +8,10 @@
 		"files.eol": "auto",
 		"files.encoding": "utf8",
 		"editor.formatOnSave": true,
+		"editor.fontLigatures": "'calt', 'liga', 'dlig', 'ss01', 'ss02', 'ss06', 'ss07'",
+		"editor.fontFamily": "'Monaspace Neon Var', 'Intel One Mono', Consolas",
+		"editor.fontWeight": "300",
+		"editor.fontSize": 14,
 		"rust-analyzer.check.command": "clippy",
 		"rust-analyzer.debug.engine": "vadimcn.vscode-lldb",
 		"rust-analyzer.restartServerOnConfigChange": true,
@@ -20,7 +24,8 @@
 		"recommendations": [
 			"vadimcn.vscode-lldb",
 			"rust-lang.rust-analyzer",
-			"streetsidesoftware.code-spell-checker"
+			"streetsidesoftware.code-spell-checker",
+			"tamasfe.even-better-toml"
 		]
 	},
 }
