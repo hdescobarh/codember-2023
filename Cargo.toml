@@ -2,7 +2,8 @@
 name = "codember"
 version = "0.1.0"
 edition = "2021"
-
+authors = ["Hans D. Escobar H. <escobar.hans@gmail.com>"]
+license = "MIT"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
