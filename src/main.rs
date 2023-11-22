@@ -3,17 +3,22 @@ mod challenge02;
 mod challenge03;
 use std::fs;
 
+const FILE_ERR: &str = "Failed to read the file";
 fn main() {
     // Challenge 01 — Encrypted message
     println!("Solving Challenge 01...");
-    let message = fs::read_to_string("./data/message_01.txt").expect("Failed to read the file");
+    let message = fs::read_to_string("./data/message_01.txt").expect(FILE_ERR);
     println!("{}\n", challenge01::decoder(&message));
 
     // Challenge 02 — Mini compiler
     println!("Solving Challenge 02...");
-    let message = fs::read_to_string("./data/message_02.txt").expect("Failed to read the file");
+    let message = fs::read_to_string("./data/message_02.txt").expect(FILE_ERR);
     let mut compiler = challenge02::Compiler::new();
     println!("{}", compiler.build(&message));
 
     // Challenge 03 - Spy encryption
+    println!("Solving Challenge 03...");
+    let policies = fs::read_to_string("./data/encryption_policies.txt").expect(FILE_ERR);
+    let validation = challenge03::validate_policies(&policies);
+    println!("The 42nd invalid key is: {}", validation[41]);
 }
