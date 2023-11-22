@@ -1,5 +1,6 @@
 mod challenge01;
 mod challenge02;
+mod challenge03;
 use std::fs;
 
 fn main() {
@@ -13,4 +14,6 @@ fn main() {
     let message = fs::read_to_string("./data/message_02.txt").expect("Failed to read the file");
     let mut compiler = challenge02::Compiler::new();
     println!("{}", compiler.build(&message));
+
+    // Challenge 03 - Spy encryption
 }
