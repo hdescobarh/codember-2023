@@ -22,4 +22,10 @@ fn main() {
     let policies = fs::read_to_string("./data/encryption_policies.txt").expect(FILE_ERR);
     let validation = challenge03::validate_policies(&policies);
     println!("The 42nd invalid key is: {}", validation[41]);
+
+    // Challenge 04 - Hacker infiltration
+    println!("Solving Challenge 04...");
+    let files_quarantine = fs::read_to_string("./data/files_quarantine.txt").expect(FILE_ERR);
+    let validation = challenge04::validate_files(&files_quarantine);
+    println!("The 33rd real file checksum is: {}", validation[32]);
 }
