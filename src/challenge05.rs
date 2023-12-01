@@ -16,8 +16,13 @@ A user is only valid if:
 pub fn discover_message(csv_content: &str) -> String {
     let mut message = String::new();
     for line in csv_content.lines() {
-        let first = line.chars().next().unwrap();
-        message.push(first);
+        match parse_line(line) {
+            Some(username) => {
+                let first = username.chars().next().unwrap();
+                message.push(first);
+            }
+            None => continue,
+        }
     }
     message
 }
@@ -34,38 +39,38 @@ fn parse_line(line: &str) -> Option<&str> {
         panic!("Improper line format.")
     }
 
-    // id exists and is alphanumeric
-    let id: &str = splitted_line[0];
-    if id.is_empty() || id.chars().any(|c| !c.is_alphanumeric()) {
-        return None;
-    }
-
     // username exists and is alphanumeric
     let username: &str = splitted_line[1];
     if username.is_empty() || username.chars().any(|c| !c.is_alphanumeric()) {
-        return None;
+        return Some(username);
+    }
+
+    // id exists and is alphanumeric
+    let id: &str = splitted_line[0];
+    if id.is_empty() || id.chars().any(|c| !c.is_alphanumeric()) {
+        return Some(username);
     }
 
     // age: is optional but if it appears it is a number
     let age: &str = splitted_line[3];
     if !age.is_empty() && age.chars().any(|c| !c.is_numeric()) {
-        return None;
+        return Some(username);
     }
 
     // location is optional but if it appears it is a text string
     let location: &str = splitted_line[4];
     if !location.is_empty() && location.chars().any(|c| !c.is_alphabetic() && c != ' ') {
-        return None;
+        return Some(username);
     }
 
     // email exists and is valid (follows the pattern user@domain.com)
     // validating the patterns without regex is a pain in the ass 😬
     let email: &str = splitted_line[2];
     if !valid_email(email) {
-        return None;
+        return Some(username);
     }
 
-    Some(username)
+    None
 }
 
 // valid email pattern: user@domain.com
@@ -114,10 +119,10 @@ mod test {
     #[test]
     fn line_parser() {
         let test_cases = [
-            (Some("alex"), "1a421fa,alex,alex9@gmail.com,18,Barcelona"),
-            (None, "9412p_m,maria,mb@hotmail.com,22,CDMX"),
-            (Some("madeval"), "494ee0,madeval,mdv@twitch.tv,,"),
-            (None, "494ee0,madeval,twitch.tv,22,Montevideo"),
+            (None, "1a421fa,alex,alex9@gmail.com,18,Barcelona"),
+            (Some("maria"), "9412p_m,maria,mb@hotmail.com,22,CDMX"),
+            (None, "494ee0,madeval,mdv@twitch.tv,,"),
+            (Some("madeval"), "494ee0,madeval,twitch.tv,22,Montevideo"),
         ];
         for (expected, case) in test_cases {
             assert_eq!(expected, parse_line(case))
