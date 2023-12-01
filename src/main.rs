@@ -29,4 +29,10 @@ fn main() {
     let files_quarantine = fs::read_to_string("./data/files_quarantine.txt").expect(FILE_ERR);
     let validation = challenge04::validate_files(&files_quarantine);
     println!("The 33rd real file checksum is: {}", validation[32]);
+
+    // Challenge 05 - The Final Problem
+    println!("Solving Challenge 05...");
+    let csv_content = fs::read_to_string("./data/database_attacked.txt").expect(FILE_ERR);
+    let message = challenge05::discover_message(&csv_content);
+    println!("The message is: {}", message);
 }
